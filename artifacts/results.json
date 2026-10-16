@@ -1,0 +1,162 @@
+{
+  "model_name": "Random Forest",
+  "comparison": {
+    "Logistic Regression": {
+      "cv_auc_mean": 0.896,
+      "cv_auc_std": 0.015,
+      "cv_recall_mean": 0.765,
+      "test": {
+        "accuracy": 0.869,
+        "precision": 0.812,
+        "recall": 0.929,
+        "roc_auc": 0.951
+      }
+    },
+    "Decision Tree": {
+      "cv_auc_mean": 0.785,
+      "cv_auc_std": 0.042,
+      "cv_recall_mean": 0.665,
+      "test": {
+        "accuracy": 0.787,
+        "precision": 0.742,
+        "recall": 0.821,
+        "roc_auc": 0.864
+      }
+    },
+    "Random Forest": {
+      "cv_auc_mean": 0.883,
+      "cv_auc_std": 0.029,
+      "cv_recall_mean": 0.765,
+      "test": {
+        "accuracy": 0.902,
+        "precision": 0.867,
+        "recall": 0.929,
+        "roc_auc": 0.96
+      }
+    },
+    "XGBoost": {
+      "cv_auc_mean": 0.864,
+      "cv_auc_std": 0.017,
+      "cv_recall_mean": 0.774,
+      "test": {
+        "accuracy": 0.869,
+        "precision": 0.812,
+        "recall": 0.929,
+        "roc_auc": 0.938
+      }
+    }
+  },
+  "external": {
+    "cleveland": {
+      "accuracy": 0.902,
+      "precision": 0.867,
+      "recall": 0.929,
+      "roc_auc": 0.96,
+      "name": "Cleveland (held-out test)",
+      "n": 61,
+      "missing_pct": 0.5,
+      "positive_pct": 45.9
+    },
+    "hungarian": {
+      "accuracy": 0.797,
+      "precision": 0.848,
+      "recall": 0.528,
+      "roc_auc": 0.883,
+      "name": "Hungarian",
+      "n": 295,
+      "missing_pct": 20.7,
+      "positive_pct": 35.9
+    },
+    "switzerland": {
+      "accuracy": 0.577,
+      "precision": 0.985,
+      "recall": 0.557,
+      "roc_auc": 0.767,
+      "name": "Switzerland",
+      "n": 123,
+      "missing_pct": 24.8,
+      "positive_pct": 93.5
+    },
+    "va": {
+      "accuracy": 0.59,
+      "precision": 0.885,
+      "recall": 0.517,
+      "roc_auc": 0.738,
+      "name": "VA Long Beach",
+      "n": 200,
+      "missing_pct": 28.8,
+      "positive_pct": 74.5
+    }
+  },
+  "global_importance": [
+    {
+      "feature": "thal",
+      "label": "Thalassemia",
+      "importance": 0.1074
+    },
+    {
+      "feature": "ca",
+      "label": "Major vessels (0-3)",
+      "importance": 0.0899
+    },
+    {
+      "feature": "cp",
+      "label": "Chest pain type",
+      "importance": 0.0861
+    },
+    {
+      "feature": "oldpeak",
+      "label": "ST depression (oldpeak)",
+      "importance": 0.0521
+    },
+    {
+      "feature": "thalach",
+      "label": "Max heart rate",
+      "importance": 0.042
+    },
+    {
+      "feature": "exang",
+      "label": "Exercise-induced angina",
+      "importance": 0.0386
+    },
+    {
+      "feature": "slope",
+      "label": "ST slope",
+      "importance": 0.0348
+    },
+    {
+      "feature": "sex",
+      "label": "Sex",
+      "importance": 0.0295
+    },
+    {
+      "feature": "age",
+      "label": "Age",
+      "importance": 0.0258
+    },
+    {
+      "feature": "chol",
+      "label": "Cholesterol",
+      "importance": 0.0127
+    },
+    {
+      "feature": "trestbps",
+      "label": "Resting blood pressure",
+      "importance": 0.011
+    },
+    {
+      "feature": "restecg",
+      "label": "Resting ECG",
+      "importance": 0.0097
+    },
+    {
+      "feature": "fbs",
+      "label": "Fasting blood sugar > 120",
+      "importance": 0.0009
+    }
+  ],
+  "split": {
+    "train": 242,
+    "test": 61
+  }
+}

@@ -1,0 +1,23 @@
+{% extends "base.html" %}{% block body %}
+<h1>Model, explainability and validation</h1>
+
+<h2>1. Model comparison (Cleveland, 5-fold cross-validation on the training split)</h2>
+<div class="card"><table><tr><th>Model</th><th>CV ROC-AUC</th><th>CV recall</th><th>Test accuracy</th><th>Test recall</th><th>Test ROC-AUC</th></tr>
+{% for name, c in r.comparison.items() %}<tr><td>{{ name }}{% if name == r.model_name %} <b>(deployed)</b>{% endif %}</td>
+<td>{{ c.cv_auc_mean }} &plusmn; {{ c.cv_auc_std }}</td><td>{{ c.cv_recall_mean }}</td><td>{{ c.test.accuracy }}</td><td>{{ c.test.recall }}</td><td>{{ c.test.roc_auc }}</td></tr>{% endfor %}</table>
+<p class="muted">SHAP's exact tree explainer needs a tree-based model, so the best tree model by CV ROC-AUC is deployed.
+Train/test split: {{ r.split.train }} / {{ r.split.test }} patients. With so few records, scores move by several points between random seeds.</p></div>
+
+<h2>2. Improvement 1 - Global feature importance (mean |SHAP|, test set)</h2>
+<div class="card bars">{% for i in importance %}<div class="bar"><span>{{ i.label }}</span>
+<span class="track"><span class="fill imp" style="display:block;width:{{ i.width }}%"></span></span><span class="num">{{ i.importance }}</span></div>{% endfor %}</div>
+
+<h2>3. Improvement 2 - Cross-dataset validation (model trained on Cleveland only, not retrained)</h2>
+<div class="card"><table><tr><th>Dataset</th><th>Patients</th><th>Disease %</th><th>Missing %</th><th>Accuracy</th><th>Precision</th><th>Recall</th><th>ROC-AUC</th></tr>
+{% for k, e in r.external.items() %}<tr><td>{{ e.name }}</td><td>{{ e.n }}</td><td>{{ e.positive_pct }}</td><td>{{ e.missing_pct }}</td>
+<td>{{ e.accuracy }}</td><td>{{ e.precision }}</td><td>{{ e.recall }}</td><td>{{ e.roc_auc }}</td></tr>{% endfor %}</table></div>
+<div class="note"><b>How to read this.</b> On the other hospitals the model's ranking ability (ROC-AUC) partly carries over, but recall falls
+to roughly half at the usual 50% threshold, so many patients with disease would be missed. The datasets differ in disease rate
+(Switzerland is mostly positive) and have 20-29% of values missing, which are filled with Cleveland medians. This is the kind of
+weakness a single-dataset test hides.</div>
+{% endblock %}

@@ -1,0 +1,18 @@
+{% extends "base.html" %}{% block body %}
+<h1>Patient details</h1>
+<p>Enter the 13 clinical measurements, or load an example patient.</p>
+{% if error %}<p class="err">{{ error }}</p>{% endif %}
+<form method="post" action="/predict" class="card" id="f">
+<div class="grid">
+{% for f, label in labels.items() %}
+<div><label for="{{f}}">{{ label }}</label>
+{% if f in choices %}<select name="{{f}}" id="{{f}}" required>
+{% for v, t in choices[f] %}<option value="{{v}}">{{t}}</option>{% endfor %}</select>
+{% else %}<input type="number" step="any" name="{{f}}" id="{{f}}" min="{{numeric[f][0]}}" max="{{numeric[f][1]}}"
+ placeholder="{{numeric[f][0]}} - {{numeric[f][1]}}" required>{% endif %}</div>
+{% endfor %}</div>
+<div class="row"><button type="submit">Predict and explain</button>
+{% for name in examples %}<button type="button" class="ghost" onclick='fill({{ examples[name]|tojson }})'>{{ name }}</button>{% endfor %}</div>
+</form>
+<script>function fill(d){for(const k in d){const e=document.getElementById(k);if(e)e.value=d[k];}}</script>
+{% endblock %}

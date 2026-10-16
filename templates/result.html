@@ -1,0 +1,17 @@
+{% extends "base.html" %}{% block body %}
+<h1>Prediction</h1>
+<div class="verdict {{ 'hi' if flagged else 'lo' }}">
+<div class="big">{{ prob }}%</div>
+<div><b>{{ 'Flagged: further cardiac investigation suggested' if flagged else 'Not flagged: lower estimated likelihood' }}</b></div>
+<div class="muted">Estimated likelihood of heart disease from the {{ model_name }} model. Threshold for flagging: 50%.</div></div>
+
+<h2>Why? (SHAP explanation)</h2>
+<p>Each bar shows how much one input moved this patient's estimate, in percentage points. The average patient in the
+training data starts at <b>{{ base }}%</b>; <span style="color:var(--accent)"><b>red</b></span> inputs push the estimate
+up, <span style="color:var(--ok)"><b>green</b></span> inputs push it down.</p>
+<div class="card bars">
+{% for r in rows %}<div class="bar"><span>{{ r.label }} = {{ '%g' % r.value }}</span>
+<span class="track"><span class="fill {{ 'up' if r.shap > 0 else 'down' }}" style="display:block;width:{{ r.width }}%"></span></span>
+<span class="num">{{ '%+.1f' % r.shap }}</span></div>{% endfor %}</div>
+<div class="row"><a class="btn" href="/">Try another patient</a><a class="btn ghost" href="/validation">See validation results</a></div>
+{% endblock %}
